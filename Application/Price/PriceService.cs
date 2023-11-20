@@ -25,7 +25,7 @@ namespace Application.Price
             DateTime startDate,
             DateTime endDate)
         {
-            var customerService = await GetCustomerService(customerId, priceServiceType);
+            var customerService = await GetCustomerService(customerId, priceServiceType, startDate);
             var workingDayExemptions = priceServiceType.GetWorkingDayExcemptions();
             var customerFreeDays = await customerFreeDaysRepository.GetCustomerFreeDays(customerService.CustomerId);
             var numberOfFreeDays = customerFreeDays?.NumberOfFreeDays ?? 0;
@@ -54,13 +54,16 @@ namespace Application.Price
             return price;
         }
 
-        private async Task<CustomerService> GetCustomerService(int customerId, PriceServiceType priceServiceType)
+        private async Task<CustomerService> GetCustomerService(
+            int customerId,
+            PriceServiceType priceServiceType,
+            DateTime startDate)
         {
             var customerPriceService = await customerServiceRepository.GetCustomerService(customerId, priceServiceType);
 
-            if (customerPriceService == null || customerPriceService.StartDate > DateTime.Now)
+            if (customerPriceService == null || customerPriceService.StartDate > startDate)
             {
-                throw new Exception($"Customer with id {customerId} does not have an active price service A");
+                throw new Exception($"Customer with id {customerId} does not have an active price service A for the given time period");
             }
 
             return customerPriceService;

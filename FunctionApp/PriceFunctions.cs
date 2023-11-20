@@ -8,7 +8,6 @@ using MediatR;
 using Application.Price.Requests;
 using System;
 using System.Web.Http;
-using Application.Price.Models;
 
 namespace FunctionApp
 {

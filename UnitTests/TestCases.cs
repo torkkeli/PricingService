@@ -67,11 +67,11 @@ namespace UnitTests
             var startDate = new DateTime(2018, 1, 1);
             var endDate = new DateTime(2019, 10, 1);
             var customerServiceB = fixture.Build<CustomerService>()
-                .With(s => s.StartDate, new DateTime(2019, 9, 20))
+                .With(s => s.StartDate, new DateTime(2018, 1, 1))
                 .Without(s => s.Price)
                 .Create();
             var customerServiceC = fixture.Build<CustomerService>()
-                .With(s => s.StartDate, new DateTime(2019, 9, 20))
+                .With(s => s.StartDate, new DateTime(2018, 1, 1))
                 .Without(s => s.Price)
                 .Create();
             var customerFreeDays = fixture.Build<CustomerFreeDays>()
